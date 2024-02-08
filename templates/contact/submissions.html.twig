@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<h1>Contact Form Submissions</h1>
+<div class="card-container">
+    {% for submission in Contactus %}
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ submission.name  }}</h2>
+                <p>Email:
+                    {{ submission.email }}</p>
+                <p>phoneNumber:
+                    {{ submission.phone }}</p>
+            </div>
+            <div class="card-body">
+                <p>{{ submission.content }}</p>
+            </div>
+
+        </div>
+    </br>
+</br>{% endfor %}</div>{% endblock %}

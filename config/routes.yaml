@@ -1,0 +1,12 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+index:
+    path: /hello
+    controller: App\Controller\HelloController::index
+test:
+    path: /test/{age<\d+>?0}
+    controller: App\Controller\HelloController::test
+    host: localhost
+    schemes: [https,http]

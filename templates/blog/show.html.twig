@@ -1,0 +1,42 @@
+{%extends 'base.html.twig'%}
+{%block body %}
+    <article>
+        <h2>{{article.title}}</h2>
+        <div class="metadata">Ecrit le {{article.createdAt | date('d/m/y')}} à {{article.createdAt | date('H:i')}} dans la categorie {{article.category.title}} </div>
+        <div class="content">
+            <img src="{{article.image}}" alt="Image Description">
+            <br><br>
+            {{article.content | raw}}
+
+        
+        </div>
+    </article>
+    <section id="commentaires">
+    <h3>{{article.comments | length }} commentaires : </h3>
+{% for comment in article.comments %}
+<div class="comment">
+<div class="row">
+<div class="col-3">
+{{comment.author}} (<small>{{comment.createdAt |
+date('d/m/Y à H:i')}}</small>)
+</div>
+<div class="col">
+{{comment.content | raw}}
+</div>
+</div>
+</div>
+</section>
+{% endfor %}
+{% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-primary" href="{{ path('blog_edit', {'id': article.id}) }}">Modifier l'article</a>
+{% endif %}
+{% if app.user %}
+{{ form_start(commentForm) }}
+    {{ form_row(commentForm.author, {'attr': {'placeholder': 'Votre nom'}}) }}
+    {{ form_row(commentForm.content, {'attr': {'placeholder': 'Votre commentaire'}}) }}
+    <button type="submit" class="btn btn-success">Commenter</button>
+{{ form_end(commentForm) }}
+{% else %}
+<h2>Vous ne pouvez pas ajouter commentaire en tant que visiteur</h2>
+{% endif %}
+{% endblock %}
